@@ -39,7 +39,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, FilePenLine, Trash2 } from 'lucide-react';
+import { MoreHorizontal, FilePenLine, Trash2, AlertTriangle, PlusCircle } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
 import type { Item } from '@/lib/types';
 import {
@@ -49,10 +49,66 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/sheet';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
 import { ProductForm } from './product-form';
 import { mockItems } from '@/lib/data';
+import { useToast } from '@/hooks/use-toast';
 
-const data: Item[] = mockItems;
+const AddStockForm = ({ item, onStockAdded }: { item: Item, onStockAdded: () => void }) => {
+    const [quantity, setQuantity] = React.useState(1);
+    const [notes, setNotes] = React.useState('');
+    const { toast } = useToast();
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        // In a real app, you'd call an API to update the stock
+        // and record the transaction.
+        console.log(`Adding ${quantity} to ${item.name} with notes: ${notes}`);
+        item.stock += quantity;
+        toast({
+            title: "Stok Ditambahkan",
+            description: `${quantity} unit telah ditambahkan ke produk ${item.name}.`,
+        });
+        onStockAdded();
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="quantity" className="text-right">Jumlah</Label>
+                <Input
+                    id="quantity"
+                    type="number"
+                    value={quantity}
+                    onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="col-span-3"
+                    min="1"
+                />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="notes" className="text-right">Catatan</Label>
+                <Input
+                    id="notes"
+                    value={notes}
+                    onChange={(e) => setNotes(e.target.value)}
+                    placeholder="cth: Dari Pemasok A"
+                    className="col-span-3"
+                />
+            </div>
+            <DialogFooter>
+                <Button type="submit">Simpan</Button>
+            </DialogFooter>
+        </form>
+    )
+}
 
 export const columns: ColumnDef<Item>[] = [
   {
@@ -81,6 +137,10 @@ export const columns: ColumnDef<Item>[] = [
     },
   },
   {
+    accessorKey: 'sku',
+    header: 'SKU',
+  },
+  {
     accessorKey: 'category',
     header: 'Kategori',
     cell: ({ row }) => <Badge variant="secondary">{row.getValue('category')}</Badge>,
@@ -98,15 +158,31 @@ export const columns: ColumnDef<Item>[] = [
     header: () => <div className="text-right">Stok</div>,
     cell: ({ row }) => {
       const stock = parseInt(row.getValue('stock'));
-      return <div className="text-right">{stock}</div>;
+      const isLowStock = stock < 10;
+      return (
+        <div className={`text-right ${isLowStock ? 'text-destructive font-bold' : ''}`}>
+          <div className="flex items-center justify-end gap-2">
+            {isLowStock && <AlertTriangle className="h-4 w-4" />}
+            {stock}
+          </div>
+        </div>
+      );
     },
   },
   {
     id: 'actions',
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const item = row.original;
       const [isSheetOpen, setSheetOpen] = React.useState(false);
+      const [isAddStockOpen, setAddStockOpen] = React.useState(false);
+      
+      const handleStockAdded = () => {
+        setAddStockOpen(false);
+        // This is a hack to force react-table to re-render.
+        // In a real app with a proper data-fetching library, this would be handled automatically.
+        (table.options.meta as any)?.refreshData();
+      }
 
       return (
         <>
@@ -119,13 +195,17 @@ export const columns: ColumnDef<Item>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(item.id)}>
-              Salin ID Produk
+            <DropdownMenuItem onClick={() => setAddStockOpen(true)}>
+                <PlusCircle className="mr-2 h-4 w-4" />
+                Tambah Stok
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => setSheetOpen(true)}>
               <FilePenLine className="mr-2 h-4 w-4" />
               Edit
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(item.id)}>
+              Salin ID Produk
             </DropdownMenuItem>
             <DropdownMenuItem className="text-red-500 focus:text-red-500">
               <Trash2 className="mr-2 h-4 w-4" />
@@ -133,6 +213,7 @@ export const columns: ColumnDef<Item>[] = [
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
         <Sheet open={isSheetOpen} onOpenChange={setSheetOpen}>
           <SheetContent className="sm:max-w-xl">
             <SheetHeader>
@@ -146,6 +227,18 @@ export const columns: ColumnDef<Item>[] = [
             </div>
           </SheetContent>
         </Sheet>
+        
+        <Dialog open={isAddStockOpen} onOpenChange={setAddStockOpen}>
+            <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                    <DialogTitle>Tambah Stok: {item.name}</DialogTitle>
+                    <DialogDescription>
+                        Masukkan jumlah stok yang ditambahkan dan catatan jika perlu.
+                    </DialogDescription>
+                </DialogHeader>
+                <AddStockForm item={item} onStockAdded={handleStockAdded} />
+            </DialogContent>
+        </Dialog>
         </>
       );
     },
@@ -153,10 +246,19 @@ export const columns: ColumnDef<Item>[] = [
 ];
 
 export function ProductTable() {
+  // We manage the data state here so we can force a re-render
+  const [data, setData] = React.useState(() => [...mockItems]);
+
+  const refreshData = () => {
+    setData([...mockItems]);
+  };
+
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+    React.useState<VisibilityState>({
+      sku: false,
+    });
   const [rowSelection, setRowSelection] = React.useState({});
 
   const table = useReactTable({
@@ -176,6 +278,9 @@ export function ProductTable() {
       columnVisibility,
       rowSelection,
     },
+    meta: {
+      refreshData,
+    }
   });
 
   return (
@@ -209,7 +314,7 @@ export function ProductTable() {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id}
+                    {column.id === 'sku' ? 'SKU' : column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}
@@ -292,3 +397,5 @@ export function ProductTable() {
     </div>
   );
 }
+
+    
