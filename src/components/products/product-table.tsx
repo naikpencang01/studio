@@ -35,7 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, FilePenLine, Trash2, AlertTriangle, PlusCircle, ArrowUpDown, ChevronDown } from 'lucide-react';
+import { MoreHorizontal, FilePenLine, Trash2, AlertTriangle, PlusCircle, ArrowUpDown, ChevronDown, ExternalLink } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
 import type { Item } from '@/lib/types';
 import {
@@ -58,6 +58,7 @@ import { ProductForm } from './product-form';
 import { mockItems } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/hooks/use-mock-auth';
+import Link from 'next/link';
 
 const AddStockForm = ({ item, onStockAdded }: { item: Item, onStockAdded: () => void }) => {
     const [quantity, setQuantity] = React.useState(1);
@@ -192,6 +193,12 @@ export const columns: ColumnDef<Item>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Aksi</DropdownMenuLabel>
+            <DropdownMenuItem asChild>
+                <Link href={`/products/${item.id}`} target="_blank">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    Lihat Halaman Publik
+                </Link>
+            </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setAddStockOpen(true)}>
                 <PlusCircle className="mr-2 h-4 w-4" />
                 Tambah Stok
