@@ -42,7 +42,9 @@ export default function ReportsPage() {
                     </div>
                 </TabsContent>
                 <TabsContent value="transactions">
-                    <TransactionsTable />
+                    <div className="overflow-x-auto">
+                        <TransactionsTable />
+                    </div>
                 </TabsContent>
             </Tabs>
             
