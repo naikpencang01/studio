@@ -4,19 +4,33 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { DollarSign, ShoppingCart, Users, BarChart } from "lucide-react"
 import { formatRupiah } from "@/lib/utils";
 import { useMemo } from "react";
-import { mockTransactions } from "@/lib/data";
+import { mockTransactions, mockCustomers } from "@/lib/data";
+import { useAuth } from "@/lib/hooks/use-mock-auth";
 
 export function StatsCards() {
+    const { currentStore } = useAuth();
+
     const dailyStats = useMemo(() => {
+        if (!currentStore) return { totalSales: 0, txCount: 0, avgTxValue: 0, newCustomers: 0 };
+        
         const today = new Date().toDateString();
-        const todayTransactions = mockTransactions.filter(t => new Date(t.createdAt).toDateString() === today);
+        const storeTransactions = mockTransactions.filter(t => t.storeId === currentStore.id);
+        const todayTransactions = storeTransactions.filter(t => new Date(t.createdAt).toDateString() === today);
         
         const totalSales = todayTransactions.reduce((sum, t) => sum + t.total, 0);
         const txCount = todayTransactions.length;
         const avgTxValue = txCount > 0 ? totalSales / txCount : 0;
+        
+        const todayCustomers = mockCustomers.filter(c => 
+            c.storeId === currentStore.id && 
+            new Date(c.lastVisit).toDateString() === today &&
+            c.totalVisits === 1 // Assuming first visit is a new customer
+        );
+        const newCustomers = todayCustomers.length;
 
-        return { totalSales, txCount, avgTxValue };
-    }, []);
+
+        return { totalSales, txCount, avgTxValue, newCustomers };
+    }, [currentStore]);
 
     const stats = [
         {
@@ -36,7 +50,7 @@ export function StatsCards() {
         },
         {
             title: "Pelanggan Baru",
-            value: "12", // Mock data
+            value: dailyStats.newCustomers.toString(),
             icon: Users
         }
     ];

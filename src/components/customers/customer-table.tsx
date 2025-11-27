@@ -13,7 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from '@tanstack/react-table';
-import { format, formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import {
@@ -39,6 +39,7 @@ import { formatRupiah } from '@/lib/utils';
 import type { Customer } from '@/lib/types';
 import { mockCustomers } from '@/lib/data';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { useAuth } from '@/lib/hooks/use-mock-auth';
 
 
 const getInitials = (name: string) => {
@@ -152,7 +153,19 @@ export const columns: ColumnDef<Customer>[] = [
 ];
 
 export function CustomerTable() {
-  const [data] = React.useState(() => [...mockCustomers]);
+  const { currentStore } = useAuth();
+  
+  const [data, setData] = React.useState(() => 
+    mockCustomers.filter((customer) => customer.storeId === currentStore?.id)
+  );
+
+  React.useEffect(() => {
+    if (currentStore) {
+        setData(mockCustomers.filter((customer) => customer.storeId === currentStore.id));
+    }
+  }, [currentStore]);
+
+
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: 'lastVisit', desc: true },
   ]);
@@ -270,7 +283,7 @@ export function CustomerTable() {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredRowModel().rows.length} dari {data.length} pelanggan.
+          {table.getFilteredRowModel().rows.length} dari {mockCustomers.filter(c => c.storeId === currentStore?.id).length} pelanggan.
         </div>
         <div className="space-x-2">
           <Button

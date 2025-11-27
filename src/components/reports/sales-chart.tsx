@@ -7,9 +7,14 @@ import { mockTransactions } from '@/lib/data';
 import { format, subDays } from 'date-fns';
 import { id } from 'date-fns/locale';
 import { formatRupiah } from '@/lib/utils';
+import { useAuth } from '@/lib/hooks/use-mock-auth';
 
 export function SalesChart() {
+    const { currentStore } = useAuth();
+    
     const weeklySalesData = useMemo(() => {
+        if (!currentStore) return [];
+
         const data: { [key: string]: number } = {};
         for (let i = 6; i >= 0; i--) {
             const date = subDays(new Date(), i);
@@ -17,24 +22,26 @@ export function SalesChart() {
             data[dateString] = 0;
         }
 
-        mockTransactions.forEach(tx => {
-            const dateString = format(new Date(tx.createdAt), 'yyyy-MM-dd');
-            if (data[dateString] !== undefined) {
-                data[dateString] += tx.total;
-            }
-        });
+        mockTransactions
+            .filter(tx => tx.storeId === currentStore.id)
+            .forEach(tx => {
+                const dateString = format(new Date(tx.createdAt), 'yyyy-MM-dd');
+                if (data[dateString] !== undefined) {
+                    data[dateString] += tx.total;
+                }
+            });
 
         return Object.entries(data).map(([date, total]) => ({
             name: format(new Date(date), 'eee, d MMM', { locale: id }),
             total: total
         }));
-    }, []);
+    }, [currentStore]);
 
     return (
         <Card className="h-full">
             <CardHeader>
                 <CardTitle className="font-headline">Penjualan 7 Hari Terakhir</CardTitle>
-                <CardDescription>Total pendapatan dari penjualan setiap hari.</CardDescription>
+                <CardDescription>Total pendapatan dari penjualan setiap hari di toko ini.</CardDescription>
             </CardHeader>
             <CardContent>
                 <ResponsiveContainer width="100%" height={350}>

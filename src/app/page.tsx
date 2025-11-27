@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/hooks/use-mock-auth';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
+import { mockStores } from '@/lib/data';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -24,6 +25,7 @@ export default function LoginPage() {
         name: selectedRole === 'admin' ? 'Admin User' : 'Cashier User',
         email: `${selectedRole}@kasirku.com`,
         role: selectedRole,
+        assignedStores: selectedRole === 'admin' ? mockStores : [mockStores[0]],
       });
       router.push('/dashboard');
     }, 1000);
@@ -54,7 +56,7 @@ export default function LoginPage() {
               className="w-full"
             >
               {isLoading && role === 'cashier' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Masuk sebagai Kasir
+              Masuk sebagai Kasir (Hanya Toko Jakarta)
             </Button>
             <Button
               variant="secondary"
@@ -63,7 +65,7 @@ export default function LoginPage() {
               className="w-full"
             >
               {isLoading && role === 'admin' && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Masuk sebagai Admin
+              Masuk sebagai Admin (Semua Toko)
             </Button>
           </div>
         </CardContent>

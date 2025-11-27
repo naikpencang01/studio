@@ -37,6 +37,7 @@ import { formatRupiah } from '@/lib/utils';
 import type { Transaction } from '@/lib/types';
 import { mockTransactions } from '@/lib/data';
 import { Card, CardContent } from '@/components/ui/card';
+import { useAuth } from '@/lib/hooks/use-mock-auth';
 
 export const columns: ColumnDef<Transaction>[] = [
   {
@@ -91,7 +92,19 @@ export const columns: ColumnDef<Transaction>[] = [
 ];
 
 export function TransactionsTable() {
-  const [data] = React.useState(() => [...mockTransactions]);
+  const { currentStore } = useAuth();
+  
+  const [data, setData] = React.useState(() => 
+    mockTransactions.filter((tx) => tx.storeId === currentStore?.id)
+  );
+
+  React.useEffect(() => {
+    if (currentStore) {
+        setData(mockTransactions.filter((tx) => tx.storeId === currentStore.id));
+    }
+  }, [currentStore]);
+
+
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: 'createdAt', desc: true },
   ]);
@@ -211,7 +224,7 @@ export function TransactionsTable() {
             </div>
             <div className="flex items-center justify-end space-x-2 py-4">
                 <div className="flex-1 text-sm text-muted-foreground">
-                {table.getFilteredRowModel().rows.length} dari {data.length} transaksi.
+                {table.getFilteredRowModel().rows.length} dari {mockTransactions.filter(tx => tx.storeId === currentStore?.id).length} transaksi.
                 </div>
                 <div className="space-x-2">
                 <Button

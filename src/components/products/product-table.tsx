@@ -57,6 +57,7 @@ import { Label } from '@/components/ui/label';
 import { ProductForm } from './product-form';
 import { mockItems } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
+import { useAuth } from '@/lib/hooks/use-mock-auth';
 
 const AddStockForm = ({ item, onStockAdded }: { item: Item, onStockAdded: () => void }) => {
     const [quantity, setQuantity] = React.useState(1);
@@ -242,11 +243,20 @@ export const columns: ColumnDef<Item>[] = [
 ];
 
 export function ProductTable() {
+  const { currentStore } = useAuth();
+  
   // We manage the data state here so we can force a re-render
-  const [data, setData] = React.useState(() => [...mockItems]);
+  const [data, setData] = React.useState(() => 
+    mockItems.filter((item) => item.storeId === currentStore?.id)
+  );
+
+  React.useEffect(() => {
+    setData(mockItems.filter((item) => item.storeId === currentStore?.id));
+  }, [currentStore]);
+
 
   const refreshData = () => {
-    setData([...mockItems]);
+    setData(mockItems.filter((item) => item.storeId === currentStore?.id));
   };
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -360,7 +370,7 @@ export function ProductTable() {
                   colSpan={columns.length}
                   className="h-24 text-center"
                 >
-                  No results.
+                  Tidak ada hasil.
                 </TableCell>
               </TableRow>
             )}
@@ -369,7 +379,7 @@ export function ProductTable() {
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <div className="flex-1 text-sm text-muted-foreground">
-          {table.getFilteredRowModel().rows.length} dari {data.length} produk.
+          {table.getFilteredRowModel().rows.length} dari {mockItems.filter(i => i.storeId === currentStore?.id).length} produk.
         </div>
         <div className="space-x-2">
           <Button
@@ -393,5 +403,3 @@ export function ProductTable() {
     </div>
   );
 }
-
-    

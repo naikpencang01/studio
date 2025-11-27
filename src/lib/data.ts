@@ -1,5 +1,10 @@
-import { Item, Transaction, Customer } from './types';
+import { Item, Transaction, Customer, Store } from './types';
 import { PlaceHolderImages } from './placeholder-images';
+
+export const mockStores: Store[] = [
+  { id: 'store-1', name: 'KasirKu - Jakarta', address: 'Jl. Jend. Sudirman No. 1, Jakarta' },
+  { id: 'store-2', name: 'KasirKu - Surabaya', address: 'Jl. Basuki Rahmat No. 2, Surabaya' },
+];
 
 export const mockItems: Item[] = [
   {
@@ -12,7 +17,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[0].imageUrl,
     imageHint: PlaceHolderImages[0].imageHint,
     features: 'Biji kopi arabika, digiling halus, tekanan tinggi',
-    description: 'Espresso klasik dengan crema tebal, dibuat dari biji kopi arabika pilihan untuk rasa yang kaya dan intens.'
+    description: 'Espresso klasik dengan crema tebal, dibuat dari biji kopi arabika pilihan untuk rasa yang kaya dan intens.',
+    storeId: 'store-1',
   },
   {
     id: 'item-2',
@@ -24,7 +30,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[1].imageUrl,
     imageHint: PlaceHolderImages[1].imageHint,
     features: 'Espresso, susu steam, foam tipis',
-    description: 'Perpaduan lembut antara espresso dan susu steam, dihiasi dengan latte art yang cantik. Pilihan sempurna untuk memulai hari.'
+    description: 'Perpaduan lembut antara espresso dan susu steam, dihiasi dengan latte art yang cantik. Pilihan sempurna untuk memulai hari.',
+    storeId: 'store-1',
   },
   {
     id: 'item-3',
@@ -36,7 +43,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[2].imageUrl,
     imageHint: PlaceHolderImages[2].imageHint,
     features: 'Espresso, susu steam, foam tebal',
-    description: 'Keseimbangan sempurna antara espresso, susu panas, dan foam susu yang tebal. Memberikan pengalaman minum kopi yang klasik dan memuaskan.'
+    description: 'Keseimbangan sempurna antara espresso, susu panas, dan foam susu yang tebal. Memberikan pengalaman minum kopi yang klasik dan memuaskan.',
+    storeId: 'store-2',
   },
   {
     id: 'item-4',
@@ -48,7 +56,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[3].imageUrl,
     imageHint: PlaceHolderImages[3].imageHint,
     features: 'Espresso, air panas',
-    description: 'Shot espresso yang diperkaya dengan air panas, menciptakan kopi hitam yang ringan namun tetap kaya rasa.'
+    description: 'Shot espresso yang diperkaya dengan air panas, menciptakan kopi hitam yang ringan namun tetap kaya rasa.',
+    storeId: 'store-1',
   },
   {
     id: 'item-5',
@@ -60,7 +69,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[4].imageUrl,
     imageHint: PlaceHolderImages[4].imageHint,
     features: 'Mentega asli, adonan berlapis, renyah',
-    description: 'Croissant mentega klasik dengan lapisan yang renyah di luar dan lembut di dalam. Teman sempurna untuk kopi Anda.'
+    description: 'Croissant mentega klasik dengan lapisan yang renyah di luar dan lembut di dalam. Teman sempurna untuk kopi Anda.',
+    storeId: 'store-2',
   },
   {
     id: 'item-6',
@@ -68,11 +78,12 @@ export const mockItems: Item[] = [
     name: 'Muffin Cokelat',
     category: 'Pastry',
     price: 32000,
-    stock: 40,
+    stock: 8,
     imageUrl: PlaceHolderImages[5].imageUrl,
     imageHint: PlaceHolderImages[5].imageHint,
     features: 'Cokelat chip, lembut, manis',
-    description: 'Muffin yang lembut dan kaya akan cokelat chip berkualitas tinggi. Manis yang pas untuk menemani waktu santai Anda.'
+    description: 'Muffin yang lembut dan kaya akan cokelat chip berkualitas tinggi. Manis yang pas untuk menemani waktu santai Anda.',
+    storeId: 'store-1',
   },
     {
     id: 'item-7',
@@ -84,7 +95,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[6].imageUrl,
     imageHint: PlaceHolderImages[6].imageHint,
     features: 'Adonan lembut, glasir gula',
-    description: 'Donat klasik yang empuk dengan lapisan glasir gula manis yang meleleh di mulut.'
+    description: 'Donat klasik yang empuk dengan lapisan glasir gula manis yang meleleh di mulut.',
+    storeId: 'store-2',
   },
   {
     id: 'item-8',
@@ -96,7 +108,8 @@ export const mockItems: Item[] = [
     imageUrl: PlaceHolderImages[7].imageUrl,
     imageHint: PlaceHolderImages[7].imageHint,
     features: 'Krim keju, biskuit renyah, topping buah',
-    description: 'Potongan cheesecake yang creamy dan lembut dengan dasar biskuit renyah dan topping buah segar.'
+    description: 'Potongan cheesecake yang creamy dan lembut dengan dasar biskuit renyah dan topping buah segar.',
+    storeId: 'store-1',
   },
 ];
 
@@ -109,7 +122,8 @@ export const mockCustomers: Customer[] = [
         totalVisits: 15,
         totalSpent: 2500000,
         lastVisit: new Date(new Date().setDate(new Date().getDate() - 2)),
-        loyaltyPoints: 250
+        loyaltyPoints: 250,
+        storeId: 'store-1',
     },
     {
         id: 'cust-2',
@@ -119,7 +133,8 @@ export const mockCustomers: Customer[] = [
         totalVisits: 8,
         totalSpent: 1250000,
         lastVisit: new Date(new Date().setDate(new Date().getDate() - 5)),
-        loyaltyPoints: 125
+        loyaltyPoints: 125,
+        storeId: 'store-2',
     },
     {
         id: 'cust-3',
@@ -129,7 +144,8 @@ export const mockCustomers: Customer[] = [
         totalVisits: 25,
         totalSpent: 4500000,
         lastVisit: new Date(new Date().setDate(new Date().getDate() - 1)),
-        loyaltyPoints: 450
+        loyaltyPoints: 450,
+        storeId: 'store-1',
     },
     {
         id: 'cust-4',
@@ -139,7 +155,8 @@ export const mockCustomers: Customer[] = [
         totalVisits: 5,
         totalSpent: 750000,
         lastVisit: new Date(new Date().setDate(new Date().getDate() - 10)),
-        loyaltyPoints: 75
+        loyaltyPoints: 75,
+        storeId: 'store-2',
     },
     {
         id: 'cust-5',
@@ -149,16 +166,21 @@ export const mockCustomers: Customer[] = [
         totalVisits: 12,
         totalSpent: 1800000,
         lastVisit: new Date(new Date().setDate(new Date().getDate() - 3)),
-        loyaltyPoints: 180
+        loyaltyPoints: 180,
+        storeId: 'store-1',
     }
 ];
 
 
 export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i) => {
-    const customer = mockCustomers[i % mockCustomers.length];
+    const storeId = i % 2 === 0 ? 'store-1' : 'store-2';
+    const storeCustomers = mockCustomers.filter(c => c.storeId === storeId);
+    const customer = storeCustomers[i % storeCustomers.length];
+    
+    const storeItems = mockItems.filter(item => item.storeId === storeId);
     const itemCount = Math.floor(Math.random() * 3) + 1;
     const items = Array.from({ length: itemCount }, () => {
-        const item = mockItems[Math.floor(Math.random() * mockItems.length)];
+        const item = storeItems[Math.floor(Math.random() * storeItems.length)];
         return {
             itemId: item.id,
             quantity: Math.floor(Math.random() * 2) + 1,
@@ -180,5 +202,6 @@ export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i)
         paymentMethod: Math.random() > 0.5 ? 'Cash' : 'Card',
         status: 'Completed',
         createdAt: new Date(new Date().setDate(new Date().getDate() - Math.floor(i / 5))),
+        storeId,
     };
 });

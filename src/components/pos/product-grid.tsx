@@ -7,13 +7,19 @@ import { Button } from '@/components/ui/button';
 import { useCart } from '@/lib/hooks/use-cart';
 import { PlusCircle } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
+import { useAuth } from '@/lib/hooks/use-mock-auth';
 
 export function ProductGrid() {
   const { addToCart } = useCart();
+  const { currentStore } = useAuth();
+
+  const storeItems = mockItems.filter((item) => item.storeId === currentStore?.id);
   
+  if (!currentStore) return null;
+
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-      {mockItems.map((item) => (
+      {storeItems.map((item) => (
         <Card key={item.id} className="overflow-hidden flex flex-col">
           <CardHeader className="p-0">
             <div className="relative aspect-square">

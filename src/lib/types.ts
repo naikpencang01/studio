@@ -1,3 +1,10 @@
+
+export interface Store {
+  id: string;
+  name: string;
+  address: string;
+}
+
 export interface Item {
   id: string;
   sku: string;
@@ -9,6 +16,7 @@ export interface Item {
   imageHint: string;
   features: string;
   description: string;
+  storeId: string;
 }
 
 export interface CartItem extends Item {
@@ -30,12 +38,14 @@ export interface Transaction {
   paymentMethod: 'Cash' | 'Card';
   status: 'Completed' | 'Pending';
   createdAt: Date;
+  storeId: string;
 }
 
 export interface User {
   name: string;
   email: string;
   role: 'admin' | 'cashier';
+  assignedStores: Store[];
 }
 
 export interface Customer {
@@ -47,4 +57,5 @@ export interface Customer {
     totalSpent: number;
     lastVisit: Date;
     loyaltyPoints: number;
+    storeId: string;
 }
