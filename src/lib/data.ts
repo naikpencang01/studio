@@ -1,4 +1,4 @@
-import { Item, Transaction, Customer, Store, User } from './types';
+import { Item, Transaction, Customer, Store, User, PaymentMethod } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const mockStores: Store[] = [
@@ -202,6 +202,7 @@ export const mockCustomers: Customer[] = [
     }
 ];
 
+const paymentMethods: PaymentMethod[] = ['Cash', 'Card', 'QRIS', 'GoPay', 'OVO', 'ShopeePay'];
 
 export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i) => {
     const storeId = i % 2 === 0 ? 'store-1' : 'store-2';
@@ -221,6 +222,7 @@ export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i)
     const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const tax = subtotal * 0.11;
     const total = subtotal + tax;
+    const paymentMethod = paymentMethods[i % paymentMethods.length];
 
     return {
         id: `TX-20240521-${1001 + i}`,
@@ -230,7 +232,7 @@ export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i)
         subtotal,
         tax,
         total,
-        paymentMethod: Math.random() > 0.5 ? 'Cash' : 'Card',
+        paymentMethod,
         status: 'Completed',
         createdAt: new Date(new Date().setDate(new Date().getDate() - Math.floor(i / 5))),
         storeId,

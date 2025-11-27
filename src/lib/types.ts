@@ -23,6 +23,8 @@ export interface CartItem extends Item {
   quantity: number;
 }
 
+export type PaymentMethod = 'Cash' | 'Card' | 'QRIS' | 'GoPay' | 'OVO' | 'ShopeePay';
+
 export interface Transaction {
   id: string;
   customerId: string;
@@ -35,7 +37,7 @@ export interface Transaction {
   subtotal: number;
   tax: number;
   total: number;
-  paymentMethod: 'Cash' | 'Card';
+  paymentMethod: PaymentMethod;
   status: 'Completed' | 'Pending';
   createdAt: Date;
   storeId: string;
