@@ -80,7 +80,7 @@ export function DashboardSidebar() {
           {menuItems.map((item) =>
             item.role.includes(user?.role || '') ? (
               <SidebarMenuItem key={item.href}>
-                <Link href={item.href} passHref legacyBehavior>
+                <Link href={item.href}>
                   <SidebarMenuButton
                     isActive={pathname === item.href}
                     disabled={item.disabled}
