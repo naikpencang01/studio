@@ -1,3 +1,76 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "1",
+      "description": "Espresso",
+      "imageUrl": "https://images.unsplash.com/photo-1612509590595-785e974ed690?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxlc3ByZXNzbyUyMGNvZmZlZXxlbnwwfHx8fDE3NjQxMzQ0MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "espresso coffee"
+    },
+    {
+      "id": "2",
+      "description": "Latte",
+      "imageUrl": "https://images.unsplash.com/photo-1563311977-d285756282dc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxsYXR0ZSUyMGFydHxlbnwwfHx8fDE3NjQxMTY0NzJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "latte art"
+    },
+    {
+      "id": "3",
+      "description": "Cappuccino",
+      "imageUrl": "https://images.unsplash.com/photo-1615486780246-76e6bb33e8b5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8Y2FwcHVjY2lubyUyMGZvYW18ZW58MHx8fHwxNzY0MTk2NjQzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "cappuccino foam"
+    },
+    {
+      "id": "4",
+      "description": "Americano",
+      "imageUrl": "https://images.unsplash.com/photo-1621267860478-dbdd589372db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxibGFjayUyMGNvZmZlZXxlbnwwfHx8fDE3NjQxODI0MjZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "black coffee"
+    },
+    {
+      "id": "5",
+      "description": "Croissant",
+      "imageUrl": "https://images.unsplash.com/photo-1597528673850-e27492b0335f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxjcm9pc3NhbnQlMjBwYXN0cnl8ZW58MHx8fHwxNzY0MTMyOTkwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "croissant pastry"
+    },
+    {
+      "id": "6",
+      "description": "Muffin Cokelat",
+      "imageUrl": "https://images.unsplash.com/photo-1611614010348-7df489604fe3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBtdWZmaW58ZW58MHx8fHwxNzY0MjE5NDIxfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chocolate muffin"
+    },
+    {
+      "id": "7",
+      "description": "Donat Gula",
+      "imageUrl": "https://images.unsplash.com/photo-1709188865978-076be0382960?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxnbGF6ZWQlMjBkb251dHxlbnwwfHx8fDE3NjQyMTk0MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "glazed donut"
+    },
+    {
+      "id": "8",
+      "description": "Cheesecake",
+      "imageUrl": "https://images.unsplash.com/photo-1589119908995-c6837fa14848?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxzdHJhd2JlcnJ5JTIwY2hlZXNlY2FrZXxlbnwwfHx8fDE3NjQyMTk0MjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "strawberry cheesecake"
+    },
+    {
+      "id": "9",
+      "description": "Sandwich Ayam",
+      "imageUrl": "https://images.unsplash.com/photo-1666819604716-7b60a604bb76?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxjaGlja2VuJTIwc2FuZHdpY2h8ZW58MHx8fHwxNzY0MjEwMTM2fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "chicken sandwich"
+    },
+    {
+      "id": "10",
+      "description": "Salad Sayur",
+      "imageUrl": "https://images.unsplash.com/photo-1662743234719-d893bd7e6b61?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8ZnJlc2glMjBzYWxhZHxlbnwwfHx8fDE3NjQxNjk2NDl8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "fresh salad"
+    },
+    {
+      "id": "11",
+      "description": "Air Mineral",
+      "imageUrl": "https://images.unsplash.com/photo-1602143407151-7111542de6e8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3YXRlciUyMGJvdHRsZXxlbnwwfHx8fDE3NjQxODQyNTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "water bottle"
+    },
+    {
+      "id": "12",
+      "description": "Jus Jeruk",
+      "imageUrl": "https://images.unsplash.com/photo-1599360889420-da1afaba9edc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxvcmFuZ2UlMjBqdWljZXxlbnwwfHx8fDE3NjQyMTcwMTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "orange juice"
+    }
+  ]
 }
