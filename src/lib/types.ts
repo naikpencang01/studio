@@ -17,6 +17,8 @@ export interface CartItem extends Item {
 
 export interface Transaction {
   id: string;
+  customerId: string;
+  customerName: string;
   items: {
     itemId: string;
     quantity: number;
@@ -34,4 +36,15 @@ export interface User {
   name: string;
   email: string;
   role: 'admin' | 'cashier';
+}
+
+export interface Customer {
+    id: string;
+    name: string;
+    email: string;
+    phone: string;
+    totalVisits: number;
+    totalSpent: number;
+    lastVisit: Date;
+    loyaltyPoints: number;
 }

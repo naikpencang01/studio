@@ -41,11 +41,11 @@ const menuItems = [
     role: ['admin'],
   },
   {
-    href: '#',
+    href: '/dashboard/customers',
     label: 'Pelanggan',
     icon: Users,
     role: ['admin', 'cashier'],
-    disabled: true,
+    disabled: false,
   },
   {
     href: '#',

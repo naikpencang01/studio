@@ -1,4 +1,4 @@
-import { Item, Transaction } from './types';
+import { Item, Transaction, Customer } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const mockItems: Item[] = [
@@ -100,7 +100,62 @@ export const mockItems: Item[] = [
   },
 ];
 
+export const mockCustomers: Customer[] = [
+    {
+        id: 'cust-1',
+        name: 'Budi Santoso',
+        email: 'budi.s@example.com',
+        phone: '081234567890',
+        totalVisits: 15,
+        totalSpent: 2500000,
+        lastVisit: new Date(new Date().setDate(new Date().getDate() - 2)),
+        loyaltyPoints: 250
+    },
+    {
+        id: 'cust-2',
+        name: 'Citra Lestari',
+        email: 'citra.l@example.com',
+        phone: '081223344556',
+        totalVisits: 8,
+        totalSpent: 1250000,
+        lastVisit: new Date(new Date().setDate(new Date().getDate() - 5)),
+        loyaltyPoints: 125
+    },
+    {
+        id: 'cust-3',
+        name: 'Doni Firmansyah',
+        email: 'doni.f@example.com',
+        phone: '081987654321',
+        totalVisits: 25,
+        totalSpent: 4500000,
+        lastVisit: new Date(new Date().setDate(new Date().getDate() - 1)),
+        loyaltyPoints: 450
+    },
+    {
+        id: 'cust-4',
+        name: 'Eka Putri',
+        email: 'eka.p@example.com',
+        phone: '081122334455',
+        totalVisits: 5,
+        totalSpent: 750000,
+        lastVisit: new Date(new Date().setDate(new Date().getDate() - 10)),
+        loyaltyPoints: 75
+    },
+    {
+        id: 'cust-5',
+        name: 'Fajar Nugroho',
+        email: 'fajar.n@example.com',
+        phone: '081555666777',
+        totalVisits: 12,
+        totalSpent: 1800000,
+        lastVisit: new Date(new Date().setDate(new Date().getDate() - 3)),
+        loyaltyPoints: 180
+    }
+];
+
+
 export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i) => {
+    const customer = mockCustomers[i % mockCustomers.length];
     const itemCount = Math.floor(Math.random() * 3) + 1;
     const items = Array.from({ length: itemCount }, () => {
         const item = mockItems[Math.floor(Math.random() * mockItems.length)];
@@ -116,6 +171,8 @@ export const mockTransactions: Transaction[] = Array.from({ length: 25 }, (_, i)
 
     return {
         id: `TX-20240521-${1001 + i}`,
+        customerId: customer.id,
+        customerName: customer.name,
         items,
         subtotal,
         tax,
