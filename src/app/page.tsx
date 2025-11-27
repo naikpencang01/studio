@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/lib/hooks/use-mock-auth';
 import { useState } from 'react';
 import { Loader2 } from 'lucide-react';
-import { mockStores } from '@/lib/data';
+import { mockStores, mockUsers } from '@/lib/data';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -19,14 +19,16 @@ export default function LoginPage() {
   const handleLogin = (selectedRole: 'admin' | 'cashier') => {
     setIsLoading(true);
     setRole(selectedRole);
+
+    const userToLogin = selectedRole === 'admin' 
+        ? mockUsers.find(u => u.role === 'admin')
+        : mockUsers.find(u => u.role === 'cashier');
+
     // Simulate API call
     setTimeout(() => {
-      login({
-        name: selectedRole === 'admin' ? 'Admin User' : 'Cashier User',
-        email: `${selectedRole}@kasirku.com`,
-        role: selectedRole,
-        assignedStores: selectedRole === 'admin' ? mockStores : [mockStores[0]],
-      });
+      if(userToLogin) {
+        login(userToLogin);
+      }
       router.push('/dashboard');
     }, 1000);
   };

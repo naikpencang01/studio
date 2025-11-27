@@ -1,9 +1,40 @@
-import { Item, Transaction, Customer, Store } from './types';
+import { Item, Transaction, Customer, Store, User } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const mockStores: Store[] = [
   { id: 'store-1', name: 'KasirKu - Jakarta', address: 'Jl. Jend. Sudirman No. 1, Jakarta' },
   { id: 'store-2', name: 'KasirKu - Surabaya', address: 'Jl. Basuki Rahmat No. 2, Surabaya' },
+];
+
+export const mockUsers: User[] = [
+    { 
+        id: 'user-1',
+        name: 'Admin User',
+        email: 'admin@kasirku.com',
+        role: 'admin',
+        assignedStores: mockStores,
+    },
+    {
+        id: 'user-2',
+        name: 'Cashier Jakarta',
+        email: 'cashier.jkt@kasirku.com',
+        role: 'cashier',
+        assignedStores: [mockStores[0]],
+    },
+    {
+        id: 'user-3',
+        name: 'Cashier Surabaya',
+        email: 'cashier.sby@kasirku.com',
+        role: 'cashier',
+        assignedStores: [mockStores[1]],
+    },
+    {
+        id: 'user-4',
+        name: 'Manager Regional',
+        email: 'manager.reg@kasirku.com',
+        role: 'admin',
+        assignedStores: mockStores,
+    }
 ];
 
 export const mockItems: Item[] = [

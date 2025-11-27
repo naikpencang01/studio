@@ -9,6 +9,7 @@ import {
   Settings,
   Users,
   Warehouse,
+  UsersRound,
 } from 'lucide-react';
 import {
   Sidebar,
@@ -46,6 +47,12 @@ const menuItems = [
     icon: Users,
     role: ['admin', 'cashier'],
     disabled: false,
+  },
+  {
+    href: '/dashboard/staff',
+    label: 'Staf',
+    icon: UsersRound,
+    role: ['admin'],
   },
   {
     href: '#',
