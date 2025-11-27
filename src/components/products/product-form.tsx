@@ -15,12 +15,21 @@ import {
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import type { Item } from '@/lib/types';
-import { generateProductDescription } from '@/lib/actions';
-import { Loader2, Sparkles } from 'lucide-react';
+import { generateProductDescription, generateSocialMediaPostAction } from '@/lib/actions';
+import { Loader2, Sparkles, MessageSquareQuote } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { mockSuppliers } from '@/lib/data';
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+  } from "@/components/ui/alert-dialog"
 
 const productFormSchema = z.object({
   name: z.string().min(2, { message: 'Nama produk minimal 2 karakter.' }),
@@ -41,8 +50,11 @@ interface ProductFormProps {
 
 export function ProductForm({ product, onSuccess }: ProductFormProps) {
   const { toast } = useToast();
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isGeneratingDesc, setIsGeneratingDesc] = useState(false);
+  const [isGeneratingPost, setIsGeneratingPost] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [socialPost, setSocialPost] = useState('');
+  const [isSocialPostDialogOpen, setSocialPostDialogOpen] = useState(false);
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productFormSchema),
@@ -67,7 +79,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       });
       return;
     }
-    setIsGenerating(true);
+    setIsGeneratingDesc(true);
     try {
       const result = await generateProductDescription({
         productName: name,
@@ -91,9 +103,43 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
         variant: 'destructive',
       });
     } finally {
-      setIsGenerating(false);
+      setIsGeneratingDesc(false);
     }
   };
+
+  const handleGenerateSocialPost = async () => {
+    const { name, category, description } = form.getValues();
+    if (!name || !description) {
+        toast({
+            title: 'Informasi Kurang',
+            description: 'Nama dan deskripsi produk harus ada untuk membuat postingan.',
+            variant: 'destructive',
+        });
+        return;
+    }
+    setIsGeneratingPost(true);
+    try {
+        const result = await generateSocialMediaPostAction({
+            productName: name,
+            productCategory: category,
+            description: description,
+        });
+        if ('post' in result && result.post) {
+            setSocialPost(result.post);
+            setSocialPostDialogOpen(true);
+        } else {
+            throw new Error('Gagal membuat postingan media sosial');
+        }
+    } catch (error) {
+        toast({
+            title: 'Gagal',
+            description: 'Gagal membuat postingan media sosial. Coba lagi.',
+            variant: 'destructive',
+        });
+    } finally {
+        setIsGeneratingPost(false);
+    }
+  }
 
   async function onSubmit(data: ProductFormValues) {
     setIsSubmitting(true);
@@ -109,6 +155,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
   }
 
   return (
+    <>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -207,14 +254,24 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             <FormItem>
               <div className="flex justify-between items-center">
                 <FormLabel>Deskripsi Produk</FormLabel>
-                <Button type="button" variant="outline" size="sm" onClick={handleGenerateDescription} disabled={isGenerating}>
-                  {isGenerating ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
-                    <Sparkles className="mr-2 h-4 w-4 text-primary" />
-                  )}
-                  Generate
-                </Button>
+                <div className="flex gap-2">
+                    <Button type="button" variant="outline" size="sm" onClick={handleGenerateDescription} disabled={isGeneratingDesc}>
+                    {isGeneratingDesc ? (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                        <Sparkles className="mr-2 h-4 w-4 text-primary" />
+                    )}
+                    Buat Deskripsi
+                    </Button>
+                    <Button type="button" variant="outline" size="sm" onClick={handleGenerateSocialPost} disabled={isGeneratingPost}>
+                        {isGeneratingPost ? (
+                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        ) : (
+                            <MessageSquareQuote className="mr-2 h-4 w-4 text-primary" />
+                        )}
+                        Buat Postingan
+                    </Button>
+                </div>
               </div>
               <FormControl>
                 <Textarea
@@ -237,5 +294,25 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
         </div>
       </form>
     </Form>
+
+    <AlertDialog open={isSocialPostDialogOpen} onOpenChange={setSocialPostDialogOpen}>
+        <AlertDialogContent>
+            <AlertDialogHeader>
+            <AlertDialogTitle>Saran Postingan Media Sosial</AlertDialogTitle>
+            <AlertDialogDescription>
+                Berikut adalah contoh postingan yang bisa Anda gunakan. Salin dan tempel ke platform media sosial Anda!
+            </AlertDialogDescription>
+            </AlertDialogHeader>
+            <div className="bg-muted p-4 rounded-md my-4 whitespace-pre-wrap font-mono text-sm">
+                {socialPost}
+            </div>
+            <AlertDialogFooter>
+                <AlertDialogAction onClick={() => navigator.clipboard.writeText(socialPost)}>Salin Teks</AlertDialogAction>
+                <Button variant="outline" onClick={() => setSocialPostDialogOpen(false)}>Tutup</Button>
+            </AlertDialogFooter>
+        </AlertDialogContent>
+    </AlertDialog>
+
+    </>
   );
 }
