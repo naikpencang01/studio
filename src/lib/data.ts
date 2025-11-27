@@ -1,10 +1,16 @@
-import { Item, Transaction, Customer, Store, User, PaymentMethod } from './types';
+import { Item, Transaction, Customer, Store, User, PaymentMethod, Supplier } from './types';
 import { PlaceHolderImages } from './placeholder-images';
 
 export const mockStores: Store[] = [
   { id: 'store-1', name: 'KasirKu - Jakarta', address: 'Jl. Jend. Sudirman No. 1, Jakarta' },
   { id: 'store-2', name: 'KasirKu - Surabaya', address: 'Jl. Basuki Rahmat No. 2, Surabaya' },
 ];
+
+export const mockSuppliers: Supplier[] = [
+    { id: 'sup-1', name: 'Kopi Jaya Abadi', contactPerson: 'Rina', phone: '0812-1111-2222'},
+    { id: 'sup-2', name: 'Roti & Kue Lezat', contactPerson: 'Agus', phone: '0813-3333-4444'},
+    { id: 'sup-3', name: 'Aneka Minuman Segar', contactPerson: 'Sari', phone: '0814-5555-6666'},
+]
 
 export const mockUsers: User[] = [
     { 
@@ -50,6 +56,7 @@ export const mockItems: Item[] = [
     features: 'Biji kopi arabika, digiling halus, tekanan tinggi',
     description: 'Espresso klasik dengan crema tebal, dibuat dari biji kopi arabika pilihan untuk rasa yang kaya dan intens.',
     storeId: 'store-1',
+    supplierId: 'sup-1',
   },
   {
     id: 'item-2',
@@ -63,6 +70,7 @@ export const mockItems: Item[] = [
     features: 'Espresso, susu steam, foam tipis',
     description: 'Perpaduan lembut antara espresso dan susu steam, dihiasi dengan latte art yang cantik. Pilihan sempurna untuk memulai hari.',
     storeId: 'store-1',
+    supplierId: 'sup-1',
   },
   {
     id: 'item-3',
@@ -76,6 +84,7 @@ export const mockItems: Item[] = [
     features: 'Espresso, susu steam, foam tebal',
     description: 'Keseimbangan sempurna antara espresso, susu panas, dan foam susu yang tebal. Memberikan pengalaman minum kopi yang klasik dan memuaskan.',
     storeId: 'store-2',
+    supplierId: 'sup-1',
   },
   {
     id: 'item-4',
@@ -89,6 +98,7 @@ export const mockItems: Item[] = [
     features: 'Espresso, air panas',
     description: 'Shot espresso yang diperkaya dengan air panas, menciptakan kopi hitam yang ringan namun tetap kaya rasa.',
     storeId: 'store-1',
+    supplierId: 'sup-1',
   },
   {
     id: 'item-5',
@@ -102,6 +112,7 @@ export const mockItems: Item[] = [
     features: 'Mentega asli, adonan berlapis, renyah',
     description: 'Croissant mentega klasik dengan lapisan yang renyah di luar dan lembut di dalam. Teman sempurna untuk kopi Anda.',
     storeId: 'store-2',
+    supplierId: 'sup-2',
   },
   {
     id: 'item-6',
@@ -115,6 +126,7 @@ export const mockItems: Item[] = [
     features: 'Cokelat chip, lembut, manis',
     description: 'Muffin yang lembut dan kaya akan cokelat chip berkualitas tinggi. Manis yang pas untuk menemani waktu santai Anda.',
     storeId: 'store-1',
+    supplierId: 'sup-2',
   },
     {
     id: 'item-7',
@@ -128,6 +140,7 @@ export const mockItems: Item[] = [
     features: 'Adonan lembut, glasir gula',
     description: 'Donat klasik yang empuk dengan lapisan glasir gula manis yang meleleh di mulut.',
     storeId: 'store-2',
+    supplierId: 'sup-2',
   },
   {
     id: 'item-8',
@@ -141,6 +154,7 @@ export const mockItems: Item[] = [
     features: 'Krim keju, biskuit renyah, topping buah',
     description: 'Potongan cheesecake yang creamy dan lembut dengan dasar biskuit renyah dan topping buah segar.',
     storeId: 'store-1',
+    supplierId: 'sup-2',
   },
 ];
 

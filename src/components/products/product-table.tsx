@@ -55,7 +55,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { ProductForm } from './product-form';
-import { mockItems } from '@/lib/data';
+import { mockItems, mockSuppliers } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/lib/hooks/use-mock-auth';
 import Link from 'next/link';
@@ -142,6 +142,15 @@ export const columns: ColumnDef<Item>[] = [
     accessorKey: 'category',
     header: 'Kategori',
     cell: ({ row }) => <Badge variant="secondary">{row.getValue('category')}</Badge>,
+  },
+  {
+    accessorKey: 'supplierId',
+    header: 'Pemasok',
+    cell: ({ row }) => {
+        const supplierId = row.getValue('supplierId') as string;
+        const supplier = mockSuppliers.find(s => s.id === supplierId);
+        return supplier ? supplier.name : 'N/A';
+    }
   },
   {
     accessorKey: 'price',
@@ -271,6 +280,7 @@ export function ProductTable() {
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       sku: false,
+      supplierId: false,
     });
   const [rowSelection, setRowSelection] = React.useState({});
 
@@ -318,6 +328,11 @@ export function ProductTable() {
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
+                const columnIdMap: { [key: string]: string } = {
+                    sku: 'SKU',
+                    supplierId: 'Pemasok',
+                    category: 'Kategori',
+                }
                 return (
                   <DropdownMenuCheckboxItem
                     key={column.id}
@@ -327,7 +342,7 @@ export function ProductTable() {
                       column.toggleVisibility(!!value)
                     }
                   >
-                    {column.id === 'sku' ? 'SKU' : column.id}
+                    {columnIdMap[column.id] || column.id}
                   </DropdownMenuCheckboxItem>
                 );
               })}

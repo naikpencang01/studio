@@ -1,8 +1,16 @@
 
+
 export interface Store {
   id: string;
   name: string;
   address: string;
+}
+
+export interface Supplier {
+    id: string;
+    name: string;
+    contactPerson: string;
+    phone: string;
 }
 
 export interface Item {
@@ -17,6 +25,7 @@ export interface Item {
   features: string;
   description: string;
   storeId: string;
+  supplierId?: string;
 }
 
 export interface CartItem extends Item {

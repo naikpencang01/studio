@@ -19,6 +19,8 @@ import { generateProductDescription } from '@/lib/actions';
 import { Loader2, Sparkles } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { mockSuppliers } from '@/lib/data';
 
 const productFormSchema = z.object({
   name: z.string().min(2, { message: 'Nama produk minimal 2 karakter.' }),
@@ -27,6 +29,7 @@ const productFormSchema = z.object({
   stock: z.coerce.number().int({ message: 'Stok harus berupa angka bulat.' }),
   features: z.string().min(3, { message: 'Sebutkan setidaknya satu fitur.' }),
   description: z.string().optional(),
+  supplierId: z.string().optional(),
 });
 
 type ProductFormValues = z.infer<typeof productFormSchema>;
@@ -50,6 +53,7 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
       stock: product?.stock || 0,
       features: product?.features || '',
       description: product?.description || '',
+      supplierId: product?.supplierId || '',
     },
   });
 
@@ -161,6 +165,28 @@ export function ProductForm({ product, onSuccess }: ProductFormProps) {
             )}
             />
         </div>
+         <FormField
+            control={form.control}
+            name="supplierId"
+            render={({ field }) => (
+                <FormItem>
+                <FormLabel>Pemasok</FormLabel>
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                    <FormControl>
+                    <SelectTrigger>
+                        <SelectValue placeholder="Pilih pemasok..." />
+                    </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                        {mockSuppliers.map(supplier => (
+                             <SelectItem key={supplier.id} value={supplier.id}>{supplier.name}</SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <FormMessage />
+                </FormItem>
+            )}
+        />
         <FormField
             control={form.control}
             name="features"
