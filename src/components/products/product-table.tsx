@@ -3,10 +3,6 @@
 import * as React from 'react';
 import Image from 'next/image';
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-} from '@radix-ui/react-icons';
-import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
@@ -39,7 +35,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import { MoreHorizontal, FilePenLine, Trash2, AlertTriangle, PlusCircle } from 'lucide-react';
+import { MoreHorizontal, FilePenLine, Trash2, AlertTriangle, PlusCircle, ArrowUpDown, ChevronDown } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
 import type { Item } from '@/lib/types';
 import {
@@ -120,7 +116,7 @@ export const columns: ColumnDef<Item>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Produk
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -297,7 +293,7 @@ export function ProductTable() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Kolom <ChevronDownIcon className="ml-2 h-4 w-4" />
+              Kolom <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

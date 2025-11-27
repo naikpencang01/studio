@@ -2,10 +2,6 @@
 
 import * as React from 'react';
 import {
-  CaretSortIcon,
-  ChevronDownIcon,
-} from '@radix-ui/react-icons';
-import {
   ColumnDef,
   ColumnFiltersState,
   SortingState,
@@ -38,7 +34,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { MoreHorizontal, Star } from 'lucide-react';
+import { MoreHorizontal, Star, ArrowUpDown, ChevronDown } from 'lucide-react';
 import { formatRupiah } from '@/lib/utils';
 import type { Customer } from '@/lib/types';
 import { mockCustomers } from '@/lib/data';
@@ -63,7 +59,7 @@ export const columns: ColumnDef<Customer>[] = [
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
           Pelanggan
-          <CaretSortIcon className="ml-2 h-4 w-4" />
+          <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
@@ -117,7 +113,7 @@ export const columns: ColumnDef<Customer>[] = [
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             Kunjungan Terakhir
-            <CaretSortIcon className="ml-2 h-4 w-4" />
+            <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         );
       },
@@ -198,7 +194,7 @@ export function CustomerTable() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Kolom <ChevronDownIcon className="ml-2 h-4 w-4" />
+              Kolom <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
