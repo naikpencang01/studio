@@ -156,6 +156,20 @@ export const mockItems: Item[] = [
     storeId: 'store-1',
     supplierId: 'sup-2',
   },
+  {
+    id: 'item-13',
+    sku: 'CF-005',
+    name: 'Kopi Bubuk Robusta',
+    category: 'Bahan Baku',
+    price: 75000,
+    stock: 50,
+    imageUrl: PlaceHolderImages[12].imageUrl,
+    imageHint: PlaceHolderImages[12].imageHint,
+    features: '100% Robusta, gilingan sedang, 250g',
+    description: 'Biji kopi Robusta pilihan yang digiling dengan tingkat medium, cocok untuk membuat espresso atau kopi tubruk dengan karakter yang kuat.',
+    storeId: 'store-1',
+    supplierId: 'sup-1',
+  },
 ];
 
 export const mockCustomers: Customer[] = [
